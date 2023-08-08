@@ -6,6 +6,7 @@ loadSprite("water", "./images/waterballoon.png");
 
 
 
+
 // Define player movement speed (pixels per second)
 const SPEED = 320;
 
