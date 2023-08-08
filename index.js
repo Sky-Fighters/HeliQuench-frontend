@@ -19,7 +19,7 @@ let canSpawnWaterBalloon = true;
 
 const background = add([
     sprite("background"),
-    scale(2),
+    scale(1.6),
     
     
 ]);
@@ -74,6 +74,7 @@ onKeyDown("space", () => {
     waterBalloon.onCollide("fire", (fire) => {
 	  destroy(fire);
 	  destroy(waterBalloon);
+	  
 	  spawnNewObject(fire.pos); // Create a new object in place of the water balloon
     })
 
@@ -81,21 +82,51 @@ onKeyDown("space", () => {
   }
 });
 
-const burningTree = add([
-    sprite("burning-tree"),
-    scale(1),
-    pos(100, 500),
+const protectTree = add([
+    sprite("tree"),
+    scale(0.7),
+    pos(100, 400),
     area(),
-    "fire",
+    "protect",
 
 ]);
 
+function spawnTree() {
+    add([
+        sprite("burning-tree"),
+        scale(0.7),
+        pos(width(), height() + 10),
+        anchor("botleft"),
+        move(LEFT, 200),
+        area(),
+        "fire",
+    ]);
+    wait(rand(0.5, 1.5), () => {
+        spawnTree();
+    });
+}
+
+spawnTree();
+
 function spawnNewObject(position) {
-  // Define the properties of the new object
   const newObj = add([
-    sprite("tree"), // Replace "newObject" with the sprite name you want
+    sprite("tree"), 
     pos(position),
-    scale(1),
-    // Add any other properties you need
+    scale(0.8),
   ]);
 }
+
+function spawnNewFireTree(position) {
+  const newObj = add([
+    sprite("burning-tree"), 
+    pos(position),
+    scale(0.8),
+  ]);
+}
+
+protectTree.onCollide("fire", () => {
+  destroy(protectTree);
+  spawnNewFireTree(protectTree.pos);
+  
+  
+})
