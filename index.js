@@ -19,7 +19,7 @@ let canSpawnWaterBalloon = true;
 
 const background = add([
     sprite("background"),
-    scale(2),
+    scale(1.6),
     
     
 ]);
@@ -83,8 +83,8 @@ onKeyDown("space", () => {
 
 const burningTree = add([
     sprite("burning-tree"),
-    scale(1),
-    pos(100, 500),
+    scale(0.7),
+    pos(100, 400),
     area(),
     "fire",
 
@@ -95,7 +95,7 @@ function spawnNewObject(position) {
   const newObj = add([
     sprite("tree"), // Replace "newObject" with the sprite name you want
     pos(position),
-    scale(1),
+    scale(0.8),
     // Add any other properties you need
   ]);
 }
