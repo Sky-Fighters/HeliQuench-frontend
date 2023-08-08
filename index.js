@@ -6,7 +6,6 @@ loadSprite("water", "./images/waterballoon.png");
 loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
 
-<<<<<<< HEAD
 scene("start", () => {
     loadFont()
     const bgColor = color(122, 48, 108); 
@@ -16,153 +15,6 @@ scene("start", () => {
         bgColor,
         pos(width() / 2, height() / 2),
         anchor("center"),
-=======
-// Define the start scene
-// scene("start", () => {
-//   // Your start scene code here
-//   // Add the background sprite
-//   add([
-//     sprite("background"),
-//     pos(0, 0),
-//     scale(1.6), // Adjust the scale as needed
-//   ]);
-
-//   // Create a centered text with animation
-//   const titleText = add([
-//     text("HeliQuench", {
-//       size: 72,
-      
-//     }),
-//     pos(width() / 2, height() / 2),
-//     anchor("center"),
-//     scale(0), // Start with a smaller scale for the animation
-//   ]);
-
-//   // Define an animation loop
-//   titleText.scaleTo(1, { time: 1, ease: "bounceOut" });
-
-//   // Add a button to start the game
-//   add([
-//     rect(200, 50),
-//     pos(width() / 2, height() / 2 + 100),
-//     anchor("center"),
-//     color(0, 0, 1),
-//     "start-button",
-//   ]);
-
-//   // Handle the button click event to transition to the game scene
-//   onMousePress(() => {
-//     go("game");
-//   });
-//   onKeyPress("enter", () => {
-//     go("game");   
-//   });
-  
-// });
-
-
-scene("start", () => {
-    loadFont()
-    const bgColor = color(122, 48, 108);
-    add([
-        rect(width(), height()),
-        bgColor,
-        pos(width() / 2, height() / 2),
-        anchor("center"),
-    ]);
-    const startGame = add([
-        text("Stop the fire from spreading!!!", {
-          transform: (idx, ch) => ({
-            color: rgb(255, 255, 255),
-            pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-            scale: wave(1, 1.2, time() * 3 + idx),
-            angle: wave(-24, 9, time() * 3 + idx),
-          }),
-        }),
-        pos(width() / 2, height() / 1.5),
-        scale(0.75, 0.75),
-        anchor("center"),
-        area(),
-      ]);
-    const titleText = add([
-        text("HeliQuench", {
-          transform: (idx, ch) => ({
-            color: rgb(255, 255, 255),
-            pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-            scale: wave(1, 1.2, time() * 3 + idx),
-            angle: wave(-24, 9, time() * 3 + idx),
-          }),
-        }),
-        pos(width()/2,startGame.pos.y/2),
-        scale(1.5),
-        anchor("center"),
-        area(),
-      ])
-    onKeyPress("enter", () => {
-        go("game");  
-      });
-});
-
-
-// Define the game scene
-scene("game", () => {
-  
-  // Define player movement speed (pixels per second)
-// GAME VARIABLES 
-const SPEED = 320;
-let canSpawnWaterBalloon = true;
-
-// GAME OBJECTS 
-
-
-const background = add([
-    sprite("background"),
-    scale(1.6),
-    
-    
-]);
-
-const player = add([
-	sprite("helicopter"),   // sprite() component makes it render as a sprite
-	pos(160, 140),     // pos() component gives it position, also enables movement
-	rotate(0),        // rotate() component gives it rotation
-	anchor("center"), // anchor() component defines the pivot point (defaults to "topleft")
-	scale(0.5), 
-]);
-
-
-
-
-onKeyDown("a", () => {
-	// .move() is provided by pos() component, move by pixels per second
-	player.move(-SPEED, 0)
-})
-
-onKeyDown("d", () => {
-	player.move(SPEED, 0)
-})
-
-onKeyDown("w", () => {
-	player.move(0, -SPEED)
-})
-
-onKeyDown("s", () => {
-	player.move(0, SPEED)
-})
-
-
-
-onKeyDown("space", () => {
-  if (canSpawnWaterBalloon) {
-    canSpawnWaterBalloon = false; // Disable spawning while a water balloon is active
-
-    const waterBalloon = add([
-      sprite("water"),
-      pos(player.pos.x, player.pos.y),
-      scale(0.5),
-      move(DOWN, 250),
-      area(),
->>>>>>> 8984cc9 (added a start scene)
     ]);
 
     const startGame = add([
@@ -322,7 +174,6 @@ const score = add([
     ]);
   }
 
-<<<<<<< HEAD
   protectTree.onCollide("fire", () => {
     destroy(protectTree);
     spawnNewFireTree(protectTree.pos);
@@ -331,17 +182,3 @@ const score = add([
 
 });
 
-go("game");
-=======
-protectTree.onCollide("fire", () => {
-  destroy(protectTree);
-  spawnNewFireTree(protectTree.pos);
-  
-  
-})
-
-});
-
-
-go("start");
->>>>>>> 8984cc9 (added a start scene)
