@@ -7,52 +7,54 @@ loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
 
 scene("start", () => {
-    loadFont()
-    const bgColor = color(122, 48, 108); 
+  loadFont()
+  const bgColor = color(122, 48, 108);
 
-    add([
-        rect(width(), height()), 
-        bgColor,
-        pos(width() / 2, height() / 2),
-        anchor("center"),
-    ]);
+  add([
+    rect(width(), height()),
+    bgColor,
+    pos(width() / 2, height() / 2),
+    anchor("center"),
+  ]);
 
-    const startGame = add([
-        text("Press Enter to Continue", {
-          transform: (idx, ch) => ({
-            color: rgb(255, 255, 255),
-            pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-            scale: wave(1, 1.2, time() * 3 + idx),
-            angle: wave(-24, 9, time() * 3 + idx),
-          }),
-        }),
-        pos(width() / 2, height() / 1.5),
-        scale(0.75, 0.75),
-        anchor("center"),
-        area(),
-      ]);
-    
-    const titleText = add([
-        text("HeliQuench", {
-          transform: (idx, ch) => ({
-            color: rgb(255, 255, 255),
-            pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-            scale: wave(1, 1.2, time() * 3 + idx),
-            angle: wave(-24, 9, time() * 3 + idx),
-          }),
-        }),
-        pos(width()/2,startGame.pos.y/2),
-        scale(1.5),
-        anchor("center"),
-        area(),
-      ])
-    onKeyPress("enter", () => {
-        go("game");   
-      });
+  const startGame = add([
+    text("Press Enter to Continue", {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, height() / 1.5),
+    scale(0.75, 0.75),
+    anchor("center"),
+    area(),
+  ]);
+
+  const titleText = add([
+    text("HeliQuench", {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, startGame.pos.y / 2),
+    scale(1.5),
+    anchor("center"),
+    area(),
+  ])
+  onKeyPress("enter", () => {
+    go("game");
+  });
 });
 
 
 go("start");
+
+let score;
 
 scene("game", () => {
 
@@ -94,13 +96,12 @@ scene("game", () => {
     player.move(0, SPEED)
   })
 
-
-const score = add([
+  score = add([
     text("SCORE: 0"),
     pos(24, 24),
     { value: 0 },
     color(0, 90, 90)
-])
+  ])
 
   onKeyDown("space", () => {
     if (canSpawnWaterBalloon) {
@@ -127,10 +128,9 @@ const score = add([
         score.value += 1;
         score.text = "Score:" + score.value;
       })
-    
+
     }
   });
-
 
   const protectTree = add([
     sprite("tree"),
@@ -177,9 +177,68 @@ const score = add([
   protectTree.onCollide("fire", () => {
     destroy(protectTree);
     spawnNewFireTree(protectTree.pos);
-
+    go("game over")
   })
 
 });
 
-go("game");
+scene("game over", () => {
+  loadFont()
+  const bgColor = color(122, 48, 108);
+
+  add([
+    rect(width(), height()),
+    bgColor,
+    pos(width() / 2, height() / 2),
+    anchor("center"),
+  ]);
+
+  const retry = add([
+    text("Press Enter to Try Again", {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, height() / 1.5),
+    scale(0.75, 0.75),
+    anchor("center"),
+    area(),
+  ]);
+
+  const titleText = add([
+    text("Game Over", {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, retry.pos.y / 2),
+    scale(1.5),
+    anchor("center"),
+    area(),
+  ])
+  
+  const displayScore = add([
+    text(`Score: ${score.value}`, {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, retry.pos.y / 1.5),
+    scale(1.5),
+    anchor("center"),
+    area(),
+  ])
+  
+  onKeyPress("enter", () => {
+    go("game");
+  });
+});
