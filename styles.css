@@ -1,0 +1,15 @@
+html {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+figure {
+    width: auto;
+    height: auto;
+    border: 10px solid black;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
