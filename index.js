@@ -182,4 +182,3 @@ const score = add([
 
 });
 
-go("game");
