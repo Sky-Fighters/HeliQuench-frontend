@@ -6,6 +6,53 @@ loadSprite("water", "./images/waterballoon.png");
 loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
 
+scene("start", () => {
+    loadFont()
+    const bgColor = color(122, 48, 108); 
+
+    add([
+        rect(width(), height()), 
+        bgColor,
+        pos(width() / 2, height() / 2),
+        anchor("center"),
+    ]);
+
+    const startGame = add([
+        text("Press Enter to Continue", {
+          transform: (idx, ch) => ({
+            color: rgb(255, 255, 255),
+            pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+            scale: wave(1, 1.2, time() * 3 + idx),
+            angle: wave(-24, 9, time() * 3 + idx),
+          }),
+        }),
+        pos(width() / 2, height() / 1.5),
+        scale(0.75, 0.75),
+        anchor("center"),
+        area(),
+      ]);
+    
+    const titleText = add([
+        text("HeliQuench", {
+          transform: (idx, ch) => ({
+            color: rgb(255, 255, 255),
+            pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+            scale: wave(1, 1.2, time() * 3 + idx),
+            angle: wave(-24, 9, time() * 3 + idx),
+          }),
+        }),
+        pos(width()/2,startGame.pos.y/2),
+        scale(1.5),
+        anchor("center"),
+        area(),
+      ])
+    onKeyPress("enter", () => {
+        go("game");   
+      });
+});
+
+
+go("start");
 
 scene("game", () => {
 
@@ -20,8 +67,6 @@ scene("game", () => {
   const background = add([
     sprite("background"),
     scale(1.6),
-
-
   ]);
 
   const player = add([
@@ -31,18 +76,6 @@ scene("game", () => {
     anchor("center"), // anchor() component defines the pivot point (defaults to "topleft")
     scale(0.5),
   ]);
-
-  
-  // let score = 0;
-  // const scoreLabel = add([
-  //   text(score),
-  //   pos(24, 24),
-  // ]);
-  
-  // onUpdate(() => {
-  //   score++;
-  //   scoreLabel.text = score;
-  // });
 
   onKeyDown("a", () => {
     // .move() is provided by pos() component, move by pixels per second
@@ -62,9 +95,14 @@ scene("game", () => {
   })
 
 
+const score = add([
+    text("SCORE: 0"),
+    pos(24, 24),
+    { value: 0 },
+    color(0, 90, 90)
+])
 
   onKeyDown("space", () => {
-    const score = 0;
     if (canSpawnWaterBalloon) {
       canSpawnWaterBalloon = false; // Disable spawning while a water balloon is active
 
@@ -86,10 +124,13 @@ scene("game", () => {
         destroy(waterBalloon);
 
         spawnNewObject(fire.pos); // Create a new object in place of the water balloon
+        score.value += 1;
+        score.text = "Score:" + score.value;
       })
-
+    
     }
   });
+
 
   const protectTree = add([
     sprite("tree"),
