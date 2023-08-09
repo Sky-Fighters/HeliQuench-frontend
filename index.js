@@ -230,7 +230,10 @@ scene("game", () => {
   protectTree.onCollide("fire", () => {
     destroy(protectTree);
     spawnNewFireTree(protectTree.pos);
-    go("game over")
+    wait(.3, () => {
+      go("game over")
+    })
+    
   })
   
    player.onCollide("fire", () => {
