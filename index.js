@@ -175,7 +175,14 @@ scene("game", () => {
         score.value += 1;
         score.text = "Score:" + score.value;
       })
+      
+      waterBalloon.onCollide("fire", (fire) => {
+      shake(5)
+      })
+    
     }
+    
+    
   });
 
   const protectTree = add([
