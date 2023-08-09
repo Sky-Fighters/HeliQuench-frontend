@@ -121,6 +121,7 @@ scene("game", () => {
     rotate(0), // rotate() component gives it rotation
     anchor("center"), // anchor() component defines the pivot point (defaults to "topleft")
     scale(0.5),
+    area(),
   ]);
 
   onKeyDown("a", () => {
@@ -231,7 +232,13 @@ scene("game", () => {
     spawnNewFireTree(protectTree.pos);
     go("game over")
   })
+  
+   player.onCollide("fire", () => {
+    go("game over")
+  })
+  
 });
+   
 
 scene("game over", () => {
   const backgroundImage = add([
