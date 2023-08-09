@@ -13,24 +13,96 @@ scene("start", () => {
     sprite("forest"),
     ]);
     
+    const waterBalloon = add([
+    sprite("water"), // sprite() component makes it render as a sprite
+    pos(width()/2, height() / 2),
+    anchor("center"),
+    scale(1.5),
+    ]);
+    
+    
   loadFont("speed", "./fonts/SpeedRush-JRKVB.ttf")
   
   const titleText = add([
     text("HeliQuench", {
         font: "speed", // Replace with the actual font you loaded
-        size: 48, // Adjust the size as needed
+        size: 68, // Adjust the size as needed
         color: rgb(0, 1, 0.6), // Text color (white in this case)
     }),
     pos(width() / 2, height() / 3), // Adjust the position as needed
     anchor("center"),
     scale(1),
 ]);
+
+  const enter = add([
+    text("Press Enter to see Instructions", {
+        font: "speed", 
+        size: 68, 
+        color: rgb(0, 1, 0.6), 
+    }),
+    pos(width() / 2, height() / 1.5), 
+    anchor("center"),
+    scale(0.8),
+    ])
   
+  
+  onKeyPress("enter", () => {
+    go("instructions");
+  });
+});
+
+scene("instructions", () => {
+  
+   const backgroundImage = add([
+    sprite("forest"),
+    ]);
+    
+    const player = add([
+    sprite("helicopter"), // sprite() component makes it render as a sprite
+    pos(width()/2, height() /4),
+    anchor("center"),
+    scale(0.3, 0.3),
+    ]);
+    
+    const spacebar = add([
+      text("Press spacebar use water balloons", {
+      font: "speed", // Replace with the actual font you loaded
+      size: 40, // Adjust the size as needed
+      color: rgb(0, 1, 0.6), // Text color (white in this case)
+    }),
+    pos(width() / 2, height() / 2.4), // Adjust the position as needed
+    anchor("center"),
+    scale(1),
+      
+    ])
+    
+    const movement = add([
+      text("Press W, to move up, S to move down, A to move left, and D to move right", {
+      font: "speed", // Replace with the actual font you loaded
+      size: 40, // Adjust the size as needed
+      color: rgb(0, 1, 0.6), // Text color (white in this case)
+    }),
+    pos(width() / 2, height() / 2), // Adjust the position as needed
+    anchor("center"),
+    scale(1),
+    ])
+    
+    const enter = add([
+    text("Press Enter to start game", {
+        font: "speed", 
+        size: 68, 
+        color: rgb(0, 1, 0.6), 
+    }),
+    pos(width() / 2, height() / 1.5), 
+    anchor("center"),
+    scale(0.8),
+    ])
   
   onKeyPress("enter", () => {
     go("game");
   });
-});
+  
+})
 
 
 go("start");
