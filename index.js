@@ -8,26 +8,25 @@ loadSprite("burning-tree", "./images/burning-tree.png");
 loadSprite("forest", "./images/new-background.png")
 
 scene("start", () => {
-  
+
   const backgroundImage = add([
     sprite("forest"),
     ]);
-    
+
     const waterBalloon = add([
     sprite("water"), // sprite() component makes it render as a sprite
     pos(width()/2, height() / 2),
     anchor("center"),
     scale(1.5),
     ]);
-    
-    
+
   loadFont("speed", "./fonts/SpeedRush-JRKVB.ttf")
-  
+
   const titleText = add([
     text("HeliQuench", {
-        font: "speed", // Replace with the actual font you loaded
-        size: 68, // Adjust the size as needed
-        color: rgb(0, 1, 0.6), // Text color (white in this case)
+      font: "speed", // Replace with the actual font you loaded
+      size: 68, // Adjust the size as needed
+      color: rgb(0, 1, 0.6), // Text color (white in this case)
     }),
     pos(width() / 2, height() / 3), // Adjust the position as needed
     anchor("center"),
@@ -36,36 +35,35 @@ scene("start", () => {
 
   const enter = add([
     text("Press Enter to see Instructions", {
-        font: "speed", 
-        size: 68, 
-        color: rgb(0, 1, 0.6), 
+      font: "speed", 
+      size: 68, 
+      color: rgb(0, 1, 0.6), 
     }),
     pos(width() / 2, height() / 1.5), 
     anchor("center"),
     scale(0.8),
-    ])
-  
-  
+  ])
+
   onKeyPress("enter", () => {
     go("instructions");
   });
 });
 
 scene("instructions", () => {
-  
-   const backgroundImage = add([
+
+  const backgroundImage = add([
     sprite("forest"),
-    ]);
-    
-    const player = add([
+  ]);
+
+  const player = add([
     sprite("helicopter"), // sprite() component makes it render as a sprite
     pos(width()/2, height() /4),
     anchor("center"),
     scale(0.3, 0.3),
-    ]);
-    
-    const spacebar = add([
-      text("Press spacebar use water balloons", {
+  ]);
+
+  const spacebar = add([
+    text("Press spacebar use water balloons", {
       font: "speed", // Replace with the actual font you loaded
       size: 40, // Adjust the size as needed
       color: rgb(0, 1, 0.6), // Text color (white in this case)
@@ -73,11 +71,10 @@ scene("instructions", () => {
     pos(width() / 2, height() / 2.4), // Adjust the position as needed
     anchor("center"),
     scale(1),
-      
-    ])
-    
-    const movement = add([
-      text("Press W, to move up, S to move down, A to move left, and D to move right", {
+  ])
+
+  const movement = add([
+    text("Press W, to move up, S to move down, A to move left, and D to move right", {
       font: "speed", // Replace with the actual font you loaded
       size: 40, // Adjust the size as needed
       color: rgb(0, 1, 0.6), // Text color (white in this case)
@@ -85,40 +82,34 @@ scene("instructions", () => {
     pos(width() / 2, height() / 2), // Adjust the position as needed
     anchor("center"),
     scale(1),
-    ])
-    
-    const enter = add([
+  ])
+
+  const enter = add([
     text("Press Enter to start game", {
-        font: "speed", 
-        size: 68, 
-        color: rgb(0, 1, 0.6), 
+      font: "speed", 
+      size: 68, 
+      color: rgb(0, 1, 0.6), 
     }),
     pos(width() / 2, height() / 1.5), 
     anchor("center"),
     scale(0.8),
-    ])
-  
+  ])
+
   onKeyPress("enter", () => {
     go("game");
   });
-  
 })
-
 
 go("start");
 
 let score;
 
 scene("game", () => {
-
   // Define player movement speed (pixels per second)
   // GAME VARIABLES 
   const SPEED = 320;
   let canSpawnWaterBalloon = true;
-
   // GAME OBJECTS 
-
-
   const background = add([
     sprite("forest"),
     scale(1),
@@ -150,10 +141,14 @@ scene("game", () => {
   })
 
   score = add([
-    text("SCORE: 0"),
+    text("SCORE: 0", {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
     pos(24, 24),
     { value: 0 },
-    color(0, 90, 90)
+    color(255, 255, 255)
   ])
 
   onKeyDown("space", () => {
@@ -176,12 +171,10 @@ scene("game", () => {
       waterBalloon.onCollide("fire", (fire) => {
         destroy(fire);
         destroy(waterBalloon);
-
         spawnNewObject(fire.pos); // Create a new object in place of the water balloon
         score.value += 1;
         score.text = "Score:" + score.value;
       })
-
     }
   });
 
@@ -191,7 +184,6 @@ scene("game", () => {
     pos(100, 400),
     area(),
     "protect",
-
   ]);
 
   function spawnTree() {
@@ -232,65 +224,46 @@ scene("game", () => {
     spawnNewFireTree(protectTree.pos);
     go("game over")
   })
-
 });
 
 scene("game over", () => {
-  loadFont()
-  const bgColor = color(122, 48, 108);
-
-  add([
-    rect(width(), height()),
-    bgColor,
-    pos(width() / 2, height() / 2),
-    anchor("center"),
+  const backgroundImage = add([
+    sprite("forest"),
   ]);
 
-  const retry = add([
-    text("Press Enter to Try Again", {
-      transform: (idx, ch) => ({
-        color: rgb(255, 255, 255),
-        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-        scale: wave(1, 1.2, time() * 3 + idx),
-        angle: wave(-24, 9, time() * 3 + idx),
-      }),
-    }),
-    pos(width() / 2, height() / 1.5),
-    scale(0.75, 0.75),
-    anchor("center"),
-    area(),
-  ]);
-
-  const titleText = add([
+  const gameOver = add([
     text("Game Over", {
-      transform: (idx, ch) => ({
-        color: rgb(255, 255, 255),
-        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-        scale: wave(1, 1.2, time() * 3 + idx),
-        angle: wave(-24, 9, time() * 3 + idx),
-      }),
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, retry.pos.y / 2),
-    scale(1.5),
+    pos(width() / 2, height() / 3),
     anchor("center"),
-    area(),
-  ])
-  
+    scale(1),
+  ]);
+
   const displayScore = add([
     text(`Score: ${score.value}`, {
-      transform: (idx, ch) => ({
-        color: rgb(255, 255, 255),
-        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-        scale: wave(1, 1.2, time() * 3 + idx),
-        angle: wave(-24, 9, time() * 3 + idx),
-      }),
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, retry.pos.y / 1.5),
-    scale(1.5),
+    pos(width() / 2, height() / 2),
+    scale(1),
     anchor("center"),
-    area(),
   ])
-  
+
+  const enter = add([
+    text("Press Enter to start game", {
+      font: "speed", 
+      size: 68, 
+      color: rgb(0, 1, 0.6), 
+    }),
+    pos(width() / 2, height() / 1.5), 
+    anchor("center"),
+    scale(0.8),
+  ])
+
   onKeyPress("enter", () => {
     go("game");
   });
