@@ -190,6 +190,7 @@ every(1, () => {
 
 });
 
+
 scene("game over", () => {
   loadFont()
   const bgColor = color(122, 48, 108);
@@ -231,6 +232,8 @@ scene("game over", () => {
     area(),
   ])
 
+c
+
   const displayScore = add([
     text(`Score: ${score.value}`, {
       transform: (idx, ch) => ({
@@ -255,6 +258,8 @@ scene("game over", () => {
       
     }
   }
+  
+  
   // scene("You Win!", () => {
   //   loadFont()
   //   const bgColor = color(122, 48, 108);
