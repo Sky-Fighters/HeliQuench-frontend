@@ -241,4 +241,71 @@ scene("game over", () => {
   onKeyPress("enter", () => {
     go("game");
   });
+  scene("You Win!", () => {
+  loadFont()
+  const bgColor = color(122, 48, 108);
+
+  add([
+    rect(width(), height()),
+    bgColor,
+    pos(width() / 2, height() / 2),
+    anchor("center"),
+  ]);
+
+  const retry = add([
+    text("Press Enter to Try Again", {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, height() / 1.5),
+    scale(0.75, 0.75),
+    anchor("center"),
+    area(),
+  ]);
+
+  const titleText = add([
+    text("You Win!", {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, retry.pos.y / 2),
+    scale(1.5),
+    anchor("center"),
+    area(),
+  ])
+  
+  const displayScore = add([
+    text(`Score: ${score.value}`, {
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, retry.pos.y / 1.5),
+    scale(1.5),
+    anchor("center"),
+    area(),
+  ])
+  
+  onKeyPress("enter", () => {
+    go("game");
+  });
+});
+
+
+
+
+
+
+
 });
