@@ -1,11 +1,12 @@
 kaboom(); // adds the checkerboard background to start all the kaboom assets 
 
-loadSprite("background", "./images/forest.jpg");
 loadSprite("helicopter", "./images/helicopter.png");
 loadSprite("water", "./images/waterballoon.png");
 loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
-loadSprite("forest", "./images/new-background.png")
+loadSprite("forest", "./images/new-background.png");
+loadSound("gameSound", "./music/neon-gaming-128925.mp3");
+
 
 scene("start", () => {
 
@@ -43,6 +44,8 @@ scene("start", () => {
     anchor("center"),
     scale(0.8),
   ])
+  
+  const gameSound = play("gameSound", { loop: true, volume: 0.5 })
 
   onKeyPress("enter", () => {
     go("instructions");
@@ -63,7 +66,7 @@ scene("instructions", () => {
   ]);
 
   const spacebar = add([
-    text("Press spacebar use water balloons", {
+    text("Press spacebar to launch water balloons", {
       font: "speed", // Replace with the actual font you loaded
       size: 40, // Adjust the size as needed
       color: rgb(0, 1, 0.6), // Text color (white in this case)
@@ -74,7 +77,7 @@ scene("instructions", () => {
   ])
 
   const movement = add([
-    text("Press W, to move up, S to move down, A to move left, and D to move right", {
+    text("Press W to move up, S to move down, A to move left, and D to move right", {
       font: "speed", // Replace with the actual font you loaded
       size: 40, // Adjust the size as needed
       color: rgb(0, 1, 0.6), // Text color (white in this case)
