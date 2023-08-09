@@ -5,47 +5,28 @@ loadSprite("helicopter", "./images/helicopter.png");
 loadSprite("water", "./images/waterballoon.png");
 loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
+loadSprite("forest", "./images/new-background.png")
 
 scene("start", () => {
-  loadFont()
-  const bgColor = color(122, 48, 108);
-
-  add([
-    rect(width(), height()),
-    bgColor,
-    pos(width() / 2, height() / 2),
-    anchor("center"),
-  ]);
-
-  const startGame = add([
-    text("Press Enter to Continue", {
-      transform: (idx, ch) => ({
-        color: rgb(255, 255, 255),
-        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-        scale: wave(1, 1.2, time() * 3 + idx),
-        angle: wave(-24, 9, time() * 3 + idx),
-      }),
-    }),
-    pos(width() / 2, height() / 1.5),
-    scale(0.75, 0.75),
-    anchor("center"),
-    area(),
-  ]);
-
+  
+  const backgroundImage = add([
+    sprite("forest"),
+    ]);
+    
+  loadFont("speed", "./fonts/SpeedRush-JRKVB.ttf")
+  
   const titleText = add([
     text("HeliQuench", {
-      transform: (idx, ch) => ({
-        color: rgb(255, 255, 255),
-        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-        scale: wave(1, 1.2, time() * 3 + idx),
-        angle: wave(-24, 9, time() * 3 + idx),
-      }),
+        font: "speed", // Replace with the actual font you loaded
+        size: 48, // Adjust the size as needed
+        color: rgb(0, 1, 0.6), // Text color (white in this case)
     }),
-    pos(width() / 2, startGame.pos.y / 2),
-    scale(1.5),
+    pos(width() / 2, height() / 3), // Adjust the position as needed
     anchor("center"),
-    area(),
-  ])
+    scale(1),
+]);
+  
+  
   onKeyPress("enter", () => {
     go("game");
   });
@@ -67,8 +48,8 @@ scene("game", () => {
 
 
   const background = add([
-    sprite("background"),
-    scale(1.6),
+    sprite("forest"),
+    scale(1),
   ]);
 
   const player = add([
