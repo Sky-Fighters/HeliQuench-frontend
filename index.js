@@ -181,7 +181,7 @@ scene("game", () => {
   const protectTree = add([
     sprite("tree"),
     scale(0.7),
-    pos(100, 400),
+    pos(width() * 0.2, height() * 0.6),
     area(),
     "protect",
   ]);
@@ -190,7 +190,7 @@ scene("game", () => {
     add([
       sprite("burning-tree"),
       scale(0.7),
-      pos(width(), height() + 10),
+      pos(width(), height() + 25),
       anchor("botleft"),
       move(LEFT, 200),
       area(),
