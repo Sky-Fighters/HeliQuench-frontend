@@ -36,7 +36,7 @@ scene("start", () => {
   ]);
 
   const objective = add([
-    text("Stop the wildfire from spreading!", {
+    text("Protect the last tree from the wildfire!", {
       font: "speed",
       size: 65,
       color: rgb(0, 1, 0.6),
