@@ -89,7 +89,7 @@ scene("instructions", () => {
   ])
 
   const movement = add([
-    text("Press W to move up, S to move down, A to move left, and D to move right", {
+    text("Use the arrow keys or WASD to fly the helicopter", {
       font: "speed",
       size: 45,
       color: rgb(0, 1, 0.6),
@@ -117,16 +117,32 @@ scene("instructions", () => {
     // .move() is provided by pos() component, move by pixels per second
     player.move(-300, 0)
   })
+  onKeyDown("left", () => {
+    // .move() is provided by pos() component, move by pixels per second
+    player.move(-300, 0)
+  })
 
   onKeyDown("d", () => {
+    player.move(300, 0)
+  })
+  
+  onKeyDown("right", () => {
     player.move(300, 0)
   })
 
   onKeyDown("w", () => {
     player.move(0, -300)
   })
+  
+  onKeyDown("up", () => {
+    player.move(0, -300)
+  })
 
   onKeyDown("s", () => {
+    player.move(0, 300)
+  })
+
+  onKeyDown("down", () => {
     player.move(0, 300)
   })
 });
@@ -155,21 +171,37 @@ scene("game", () => {
     area(),
   ]);
 
-  onKeyDown("a", () => {
+   onKeyDown("a", () => {
     // .move() is provided by pos() component, move by pixels per second
-    player.move(-SPEED, 0)
+    player.move(-300, 0)
+  })
+  onKeyDown("left", () => {
+    // .move() is provided by pos() component, move by pixels per second
+    player.move(-300, 0)
   })
 
   onKeyDown("d", () => {
-    player.move(SPEED, 0)
+    player.move(300, 0)
+  })
+  
+  onKeyDown("right", () => {
+    player.move(300, 0)
   })
 
   onKeyDown("w", () => {
-    player.move(0, -SPEED)
+    player.move(0, -300)
+  })
+  
+  onKeyDown("up", () => {
+    player.move(0, -300)
   })
 
   onKeyDown("s", () => {
-    player.move(0, SPEED)
+    player.move(0, 300)
+  })
+
+  onKeyDown("down", () => {
+    player.move(0, 300)
   })
 
   score = add([
