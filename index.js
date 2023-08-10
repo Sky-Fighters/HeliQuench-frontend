@@ -9,9 +9,6 @@ loadSprite("power", "./images/lightning.png");
 loadSprite("forest", "./images/new-background.png");
 loadSound("gameSound", "./music/neon-gaming-128925.mp3");
 
-
-
-
 scene("start", () => {
 
   const backgroundImage = add([
@@ -37,7 +34,7 @@ scene("start", () => {
     anchor("center"),
     scale(1),
   ]);
-  
+
   const objective = add([
     text("Stop the wildfire from spreading!", {
       font: "speed",
@@ -48,7 +45,7 @@ scene("start", () => {
     anchor("center"),
     scale(0.8),
   ]);
-  
+
   const enter = add([
     text("Press Enter to see Instructions", {
       font: "speed",
@@ -59,7 +56,7 @@ scene("start", () => {
     anchor("center"),
     scale(0.8),
   ])
-  
+
   const gameSound = play("gameSound", { loop: true, volume: 0.5 })
 
   onKeyPress("enter", () => {
@@ -82,22 +79,22 @@ scene("instructions", () => {
 
   const spacebar = add([
     text("Press spacebar to drop water balloons", {
-      font: "speed", 
-      size: 45, 
+      font: "speed",
+      size: 45,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 5), 
+    pos(width() / 2, height() / 5),
     anchor("center"),
     scale(1),
   ])
 
   const movement = add([
     text("Press W to move up, S to move down, A to move left, and D to move right", {
-      font: "speed", 
-      size: 45, 
-      color: rgb(0, 1, 0.6), 
+      font: "speed",
+      size: 45,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 3.5), 
+    pos(width() / 2, height() / 3.5),
     anchor("center"),
     scale(1),
   ])
@@ -116,7 +113,7 @@ scene("instructions", () => {
   onKeyPress("enter", () => {
     go("game");
   });
-onKeyDown("a", () => {
+  onKeyDown("a", () => {
     // .move() is provided by pos() component, move by pixels per second
     player.move(-300, 0)
   })
@@ -175,7 +172,6 @@ scene("game", () => {
     player.move(0, SPEED)
   })
 
-
   score = add([
     text("SCORE: 0", {
       font: "speed",
@@ -210,17 +206,13 @@ scene("game", () => {
         spawnNewObject(fire.pos); // Create a new object in place of the water balloon
         score.value += 1;
         score.text = "Score:" + score.value;
-        
         updateSpawnInterval();
       })
 
       waterBalloon.onCollide("fire", (fire) => {
         shake(5)
       })
-
     }
-
-
   });
 
   const protectTree = add([
@@ -230,9 +222,9 @@ scene("game", () => {
     area(),
     "protect",
   ]);
-  
-  let spawnInterval = 1.5; 
-  let scoreThreshold = 5; 
+
+  let spawnInterval = 1.5;
+  let scoreThreshold = 5;
 
   function spawnTree() {
     add([
@@ -244,19 +236,19 @@ scene("game", () => {
       area(),
       "fire",
     ]);
-    
+
     wait(spawnInterval, () => {
-    spawnTree();
+      spawnTree();
     });
   }
 
   spawnTree();
-  
+
   function updateSpawnInterval() {
-  if (score.value % scoreThreshold === 0 && score.value !== 0) {
-    spawnInterval -= 0.2; 
+    if (score.value % scoreThreshold === 0 && score.value !== 0) {
+      spawnInterval -= 0.2;
+    }
   }
-}
 
   function spawnNewObject(position) {
     const newObj = add([
@@ -303,11 +295,11 @@ scene("leaderboard", () => {
     anchor("center"),
     scale(1),
   ]);
-  
+
   if (score.value > highScore) {
     highScore = score.value;
   }
-  
+
   const displayScore = add([
     text(`High Score: ${highScore}`, {
       font: "speed",
@@ -318,7 +310,7 @@ scene("leaderboard", () => {
     scale(1),
     anchor("center"),
   ]);
-  
+
   const returnToStart = add([
     text("Press Esc to go back", {
       font: "speed",
@@ -329,11 +321,11 @@ scene("leaderboard", () => {
     scale(1),
     anchor("center")
   ]);
-  
+
   onKeyPress("escape", () => {
     go("start")
   })
-  
+
   const enter = add([
     text("Press Enter to start game", {
       font: "speed",
@@ -344,7 +336,7 @@ scene("leaderboard", () => {
     anchor("center"),
     scale(0.8),
   ])
-  
+
   onKeyPress("enter", () => {
     go("game");
   });
@@ -387,7 +379,7 @@ scene("game over", () => {
     anchor("center"),
     scale(0.8),
   ])
-  
+
   const viewLeaderboard = add([
     text("Press Space to View Leaderboard!", {
       font: "speed",
@@ -402,7 +394,7 @@ scene("game over", () => {
   onKeyPress("enter", () => {
     go("game");
   });
-  
+
   onKeyPress("space", () => {
     go("leaderboard");
   });
