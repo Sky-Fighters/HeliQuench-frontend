@@ -235,7 +235,6 @@ scene("game", () => {
       waterBalloon.onCollide("fire", (fire) => {
         destroy(fire);
         destroy(waterBalloon);
-        spawnNewObject(fire.pos); // Create a new object in place of the water balloon
         score.value += 1;
         score.text = "Score:" + score.value;
         updateSpawnInterval();
@@ -258,11 +257,11 @@ scene("game", () => {
   let spawnInterval = 1.5;
   let scoreThreshold = 5;
 
-  function spawnTree() {
+  function spawnFire() {
     add([
       sprite("fireball"),
       scale(0.2),
-      pos(width(), height() + 25),
+      pos(width(), rand(height())),
       anchor("botleft"),
       move(LEFT, 200),
       area(),
@@ -270,24 +269,16 @@ scene("game", () => {
     ]);
 
     wait(spawnInterval, () => {
-      spawnTree();
+      spawnFire();
     });
   }
 
-  spawnTree();
+  spawnFire();
 
   function updateSpawnInterval() {
     if (score.value % scoreThreshold === 0 && score.value !== 0) {
       spawnInterval -= 0.2;
     }
-  }
-
-  function spawnNewObject(position) {
-    const newObj = add([
-      sprite("tree"),
-      pos(position),
-      scale(0.8),
-    ]);
   }
 
   function spawnNewFireTree(position) {
