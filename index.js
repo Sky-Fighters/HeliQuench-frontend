@@ -4,6 +4,8 @@ loadSprite("helicopter", "./images/helicopter.png");
 loadSprite("water", "./images/waterballoon.png");
 loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
+loadSprite("fireball", "./images/fireball.png");
+loadSprite("power", "./images/lightning.png");
 loadSprite("forest", "./images/new-background.png");
 loadSound("gameSound", "./music/neon-gaming-128925.mp3");
 
@@ -204,7 +206,7 @@ scene("game", () => {
 
   function spawnTree() {
     add([
-      sprite("burning-tree"),
+      sprite("fireball"),
       scale(0.2),
       pos(width(), height() + 25),
       anchor("botleft"),
