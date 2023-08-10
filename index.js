@@ -7,20 +7,20 @@ loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
 loadSprite("forest", "./images/new-background.png")
 
-  
+
 
 scene("start", () => {
 
   const backgroundImage = add([
     sprite("forest"),
-    ]);
+  ]);
 
-    const waterBalloon = add([
+  const waterBalloon = add([
     sprite("water"), // sprite() component makes it render as a sprite
-    pos(width()/2, height() / 2),
+    pos(width() / 2, height() / 2),
     anchor("center"),
     scale(1.5),
-    ]);
+  ]);
 
   loadFont("speed", "./fonts/SpeedRush-JRKVB.ttf")
 
@@ -33,15 +33,15 @@ scene("start", () => {
     pos(width() / 2, height() / 3), // Adjust the position as needed
     anchor("center"),
     scale(1),
-]);
+  ]);
 
   const enter = add([
     text("Press Enter to see Instructions", {
-      font: "speed", 
-      size: 68, 
-      color: rgb(0, 1, 0.6), 
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5), 
+    pos(width() / 2, height() / 1.5),
     anchor("center"),
     scale(0.8),
   ])
@@ -59,7 +59,7 @@ scene("instructions", () => {
 
   const player = add([
     sprite("helicopter"), // sprite() component makes it render as a sprite
-    pos(width()/2, height() /4),
+    pos(width() / 2, height() / 4),
     anchor("center"),
     scale(0.3, 0.3),
   ]);
@@ -88,11 +88,11 @@ scene("instructions", () => {
 
   const enter = add([
     text("Press Enter to start game", {
-      font: "speed", 
-      size: 68, 
-      color: rgb(0, 1, 0.6), 
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5), 
+    pos(width() / 2, height() / 1.5),
     anchor("center"),
     scale(0.8),
   ])
@@ -106,26 +106,6 @@ go("start");
 
 let score;
 
-let currentUser = "You"; 
-const userNames = ["Emerolde", "Erica", "Joseph"]; // list of all top players
-const userHighScores = [10000, 9000, 8000, ]; // all top players' scores 
-
-function nameInsert(index) {
-  userNames.splice(index, 0, currentUser); // adds player to array 
-  userNames.pop(); // removes lowest player
-}
-function hsCheck(cs) {
-  for (let i = 0; i < userHighScores.length; i++) {
-    if (cs > userHighScores[i]) {
-      userHighScores.splice(i, 0, cs); // replaces current index with current score
-      userHighScores.pop(); // removes lowest score
-      nameInsert(i);
-      return true;
-    }
-  }
-  return false;
-}
-let currentScore = 0;
 scene("game", () => {
   // Define player movement speed (pixels per second)
   // GAME VARIABLES 
@@ -199,14 +179,14 @@ scene("game", () => {
         score.value += 1;
         score.text = "Score:" + score.value;
       })
-      
+
       waterBalloon.onCollide("fire", (fire) => {
-      shake(5)
+        shake(5)
       })
-    
+
     }
-    
-    
+
+
   });
 
   const protectTree = add([
@@ -256,15 +236,75 @@ scene("game", () => {
     wait(.3, () => {
       go("game over")
     })
-    
   })
-  
-   player.onCollide("fire", () => {
+
+  player.onCollide("fire", () => {
     go("game over")
   })
-  
 });
-   
+
+let highScore = 0;
+
+scene("leaderboard", () => {
+  const backgroundImage = add([
+    sprite("forest"),
+  ]);
+  const title = add([
+    text("Leaderboard", {
+      font: "speed",
+      size: 75,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 5),
+    anchor("center"),
+    scale(1),
+  ]);
+  
+  if (score.value > highScore) {
+    highScore = score.value;
+  }
+  
+  const displayScore = add([
+    text(`High Score: ${highScore}`, {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 3),
+    scale(1),
+    anchor("center"),
+  ]);
+  
+  const returnToStart = add([
+    text("Press Esc to go back", {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 1.25),
+    scale(1),
+    anchor("center")
+  ]);
+  
+  onKeyPress("escape", () => {
+    go("start")
+  })
+  
+  const enter = add([
+    text("Press Enter to start game", {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 1.5),
+    anchor("center"),
+    scale(0.8),
+  ])
+  
+  onKeyPress("enter", () => {
+    go("game");
+  });
+});
 
 scene("game over", () => {
   const backgroundImage = add([
@@ -281,13 +321,7 @@ scene("game over", () => {
     anchor("center"),
     scale(1),
   ]);
-  
-  
-  
 
-const displayTopScore = add([
-  text(`topScore: ${userHighScores.value}`)])
-  
   const displayScore = add([
     text(`Score: ${score.value}`, {
       font: "speed",
@@ -301,16 +335,31 @@ const displayTopScore = add([
 
   const enter = add([
     text("Press Enter to start game", {
-      font: "speed", 
-      size: 68, 
-      color: rgb(0, 1, 0.6), 
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5), 
+    pos(width() / 2, height() / 1.5),
+    anchor("center"),
+    scale(0.8),
+  ])
+  
+  const viewLeaderboard = add([
+    text("Press Space to View Leaderboard!", {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 1.25),
     anchor("center"),
     scale(0.8),
   ])
 
   onKeyPress("enter", () => {
     go("game");
+  });
+  
+  onKeyPress("space", () => {
+    go("leaderboard");
   });
 });
