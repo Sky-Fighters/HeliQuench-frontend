@@ -67,22 +67,22 @@ scene("instructions", () => {
 
   const spacebar = add([
     text("Press spacebar to launch water balloons", {
-      font: "speed", // Replace with the actual font you loaded
-      size: 40, // Adjust the size as needed
-      color: rgb(0, 1, 0.6), // Text color (white in this case)
+      font: "speed", 
+      size: 40, 
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 2.4), // Adjust the position as needed
+    pos(width() / 2, height() / 2.4), 
     anchor("center"),
     scale(1),
   ])
 
   const movement = add([
     text("Press W to move up, S to move down, A to move left, and D to move right", {
-      font: "speed", // Replace with the actual font you loaded
-      size: 40, // Adjust the size as needed
-      color: rgb(0, 1, 0.6), // Text color (white in this case)
+      font: "speed", 
+      size: 40, 
+      color: rgb(0, 1, 0.6), 
     }),
-    pos(width() / 2, height() / 2), // Adjust the position as needed
+    pos(width() / 2, height() / 2), 
     anchor("center"),
     scale(1),
   ])
@@ -178,6 +178,8 @@ scene("game", () => {
         spawnNewObject(fire.pos); // Create a new object in place of the water balloon
         score.value += 1;
         score.text = "Score:" + score.value;
+        
+        updateSpawnInterval();
       })
       
       waterBalloon.onCollide("fire", (fire) => {
@@ -196,23 +198,33 @@ scene("game", () => {
     area(),
     "protect",
   ]);
+  
+  let spawnInterval = 1.5; 
+  let scoreThreshold = 5; 
 
   function spawnTree() {
     add([
       sprite("burning-tree"),
-      scale(0.7),
+      scale(0.2),
       pos(width(), height() + 25),
       anchor("botleft"),
       move(LEFT, 200),
       area(),
       "fire",
     ]);
-    wait(rand(0.5, 1.5), () => {
-      spawnTree();
+    
+    wait(spawnInterval, () => {
+    spawnTree();
     });
   }
 
   spawnTree();
+  
+  function updateSpawnInterval() {
+  if (score.value % scoreThreshold === 0 && score.value !== 0) {
+    spawnInterval -= 0.2; 
+  }
+}
 
   function spawnNewObject(position) {
     const newObj = add([
