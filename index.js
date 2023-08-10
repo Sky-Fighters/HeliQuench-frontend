@@ -30,18 +30,29 @@ scene("start", () => {
   const titleText = add([
     text("HeliQuench", {
       font: "speed", // Replace with the actual font you loaded
-      size: 68, // Adjust the size as needed
+      size: 70, // Adjust the size as needed
       color: rgb(0, 1, 0.6), // Text color (white in this case)
     }),
-    pos(width() / 2, height() / 3), // Adjust the position as needed
+    pos(width() / 2, height() / 5), // Adjust the position as needed
     anchor("center"),
     scale(1),
   ]);
-
+  
+  const objective = add([
+    text("Stop the wildfire from spreading!", {
+      font: "speed",
+      size: 65,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 3.5),
+    anchor("center"),
+    scale(0.8),
+  ]);
+  
   const enter = add([
     text("Press Enter to see Instructions", {
       font: "speed",
-      size: 68,
+      size: 65,
       color: rgb(0, 1, 0.6),
     }),
     pos(width() / 2, height() / 1.5),
@@ -64,18 +75,18 @@ scene("instructions", () => {
 
   const player = add([
     sprite("helicopter"), // sprite() component makes it render as a sprite
-    pos(width() / 2, height() / 4),
+    pos(width() / 2, height() / 2),
     anchor("center"),
     scale(0.3, 0.3),
   ]);
 
   const spacebar = add([
-    text("Press spacebar to launch water balloons", {
+    text("Press spacebar to drop water balloons", {
       font: "speed", 
-      size: 40, 
+      size: 45, 
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 2.4), 
+    pos(width() / 2, height() / 5), 
     anchor("center"),
     scale(1),
   ])
@@ -83,10 +94,10 @@ scene("instructions", () => {
   const movement = add([
     text("Press W to move up, S to move down, A to move left, and D to move right", {
       font: "speed", 
-      size: 40, 
+      size: 45, 
       color: rgb(0, 1, 0.6), 
     }),
-    pos(width() / 2, height() / 2), 
+    pos(width() / 2, height() / 3.5), 
     anchor("center"),
     scale(1),
   ])
@@ -97,7 +108,7 @@ scene("instructions", () => {
       size: 68,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5),
+    pos(width() / 2, height() / 1.6),
     anchor("center"),
     scale(0.8),
   ])
@@ -105,7 +116,23 @@ scene("instructions", () => {
   onKeyPress("enter", () => {
     go("game");
   });
-})
+onKeyDown("a", () => {
+    // .move() is provided by pos() component, move by pixels per second
+    player.move(-300, 0)
+  })
+
+  onKeyDown("d", () => {
+    player.move(300, 0)
+  })
+
+  onKeyDown("w", () => {
+    player.move(0, -300)
+  })
+
+  onKeyDown("s", () => {
+    player.move(0, 300)
+  })
+});
 
 go("start");
 
@@ -287,7 +314,7 @@ scene("leaderboard", () => {
       size: 68,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 3),
+    pos(width() / 2, height() / 3.5),
     scale(1),
     anchor("center"),
   ]);
@@ -298,7 +325,7 @@ scene("leaderboard", () => {
       size: 68,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.25),
+    pos(width() / 2, height() / 1.6),
     scale(1),
     anchor("center")
   ]);
@@ -313,7 +340,7 @@ scene("leaderboard", () => {
       size: 68,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5),
+    pos(width() / 2, height() / 1.9),
     anchor("center"),
     scale(0.8),
   ])
@@ -331,10 +358,10 @@ scene("game over", () => {
   const gameOver = add([
     text("Game Over", {
       font: "speed",
-      size: 68,
+      size: 75,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 3),
+    pos(width() / 2, height() / 5),
     anchor("center"),
     scale(1),
   ]);
@@ -345,18 +372,18 @@ scene("game over", () => {
       size: 68,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 2),
+    pos(width() / 2, height() / 3.5),
     scale(1),
     anchor("center"),
   ])
 
   const enter = add([
-    text("Press Enter to start game", {
+    text("Press Enter to play again", {
       font: "speed",
       size: 68,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5),
+    pos(width() / 2, height() / 1.9),
     anchor("center"),
     scale(0.8),
   ])
@@ -367,7 +394,7 @@ scene("game over", () => {
       size: 68,
       color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.25),
+    pos(width() / 2, height() / 1.6),
     anchor("center"),
     scale(0.8),
   ])
