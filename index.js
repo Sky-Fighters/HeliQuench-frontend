@@ -249,7 +249,7 @@ scene("game", () => {
   const protectTree = add([
     sprite("tree"),
     scale(0.7),
-    pos(width() * 0.2, height() * 0.6),
+    pos(width() / 15, height() / 1.85),
     area(),
     "protect",
   ]);
