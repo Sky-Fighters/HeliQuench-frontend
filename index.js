@@ -167,7 +167,7 @@ scene("game", () => {
     pos(160, 140), // pos() component gives it position, also enables movement
     rotate(0), // rotate() component gives it rotation
     anchor("center"), // anchor() component defines the pivot point (defaults to "topleft")
-    scale(0.5),
+    scale(0.4),
     area(),
   ]);
 
