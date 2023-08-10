@@ -7,6 +7,8 @@ loadSprite("tree", "./images/tree.png");
 loadSprite("burning-tree", "./images/burning-tree.png");
 loadSprite("forest", "./images/new-background.png")
 
+  
+
 scene("start", () => {
 
   const backgroundImage = add([
@@ -104,6 +106,26 @@ go("start");
 
 let score;
 
+let currentUser = "You"; 
+const userNames = ["Emerolde", "Erica", "Joseph"]; // list of all top players
+const userHighScores = [10000, 9000, 8000, ]; // all top players' scores 
+
+function nameInsert(index) {
+  userNames.splice(index, 0, currentUser); // adds player to array 
+  userNames.pop(); // removes lowest player
+}
+function hsCheck(cs) {
+  for (let i = 0; i < userHighScores.length; i++) {
+    if (cs > userHighScores[i]) {
+      userHighScores.splice(i, 0, cs); // replaces current index with current score
+      userHighScores.pop(); // removes lowest score
+      nameInsert(i);
+      return true;
+    }
+  }
+  return false;
+}
+let currentScore = 0;
 scene("game", () => {
   // Define player movement speed (pixels per second)
   // GAME VARIABLES 
@@ -140,6 +162,7 @@ scene("game", () => {
   onKeyDown("s", () => {
     player.move(0, SPEED)
   })
+
 
   score = add([
     text("SCORE: 0", {
@@ -258,7 +281,13 @@ scene("game over", () => {
     anchor("center"),
     scale(1),
   ]);
+  
+  
+//   topScore = 
 
+// const displayTopScore = add([
+//   text(`topScore: ${topScore.value}`)])
+  
   const displayScore = add([
     text(`Score: ${score.value}`, {
       font: "speed",
