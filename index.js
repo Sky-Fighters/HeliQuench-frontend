@@ -10,18 +10,20 @@ loadSprite("forest", "./images/new-background.png");
 loadSound("gameSound", "./music/neon-gaming-128925.mp3");
 
 
+
+
 scene("start", () => {
 
   const backgroundImage = add([
     sprite("forest"),
-    ]);
+  ]);
 
-    const waterBalloon = add([
+  const waterBalloon = add([
     sprite("water"), // sprite() component makes it render as a sprite
-    pos(width()/2, height() / 2),
+    pos(width() / 2, height() / 2),
     anchor("center"),
     scale(1.5),
-    ]);
+  ]);
 
   loadFont("speed", "./fonts/SpeedRush-JRKVB.ttf")
 
@@ -34,15 +36,15 @@ scene("start", () => {
     pos(width() / 2, height() / 3), // Adjust the position as needed
     anchor("center"),
     scale(1),
-]);
+  ]);
 
   const enter = add([
     text("Press Enter to see Instructions", {
-      font: "speed", 
-      size: 68, 
-      color: rgb(0, 1, 0.6), 
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5), 
+    pos(width() / 2, height() / 1.5),
     anchor("center"),
     scale(0.8),
   ])
@@ -62,7 +64,7 @@ scene("instructions", () => {
 
   const player = add([
     sprite("helicopter"), // sprite() component makes it render as a sprite
-    pos(width()/2, height() /4),
+    pos(width() / 2, height() / 4),
     anchor("center"),
     scale(0.3, 0.3),
   ]);
@@ -91,11 +93,11 @@ scene("instructions", () => {
 
   const enter = add([
     text("Press Enter to start game", {
-      font: "speed", 
-      size: 68, 
-      color: rgb(0, 1, 0.6), 
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5), 
+    pos(width() / 2, height() / 1.5),
     anchor("center"),
     scale(0.8),
   ])
@@ -146,6 +148,7 @@ scene("game", () => {
     player.move(0, SPEED)
   })
 
+
   score = add([
     text("SCORE: 0", {
       font: "speed",
@@ -183,14 +186,14 @@ scene("game", () => {
         
         updateSpawnInterval();
       })
-      
+
       waterBalloon.onCollide("fire", (fire) => {
-      shake(5)
+        shake(5)
       })
-    
+
     }
-    
-    
+
+
   });
 
   const protectTree = add([
@@ -250,15 +253,75 @@ scene("game", () => {
     wait(.3, () => {
       go("game over")
     })
-    
   })
-  
-   player.onCollide("fire", () => {
+
+  player.onCollide("fire", () => {
     go("game over")
   })
-  
 });
-   
+
+let highScore = 0;
+
+scene("leaderboard", () => {
+  const backgroundImage = add([
+    sprite("forest"),
+  ]);
+  const title = add([
+    text("Leaderboard", {
+      font: "speed",
+      size: 75,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 5),
+    anchor("center"),
+    scale(1),
+  ]);
+  
+  if (score.value > highScore) {
+    highScore = score.value;
+  }
+  
+  const displayScore = add([
+    text(`High Score: ${highScore}`, {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 3),
+    scale(1),
+    anchor("center"),
+  ]);
+  
+  const returnToStart = add([
+    text("Press Esc to go back", {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 1.25),
+    scale(1),
+    anchor("center")
+  ]);
+  
+  onKeyPress("escape", () => {
+    go("start")
+  })
+  
+  const enter = add([
+    text("Press Enter to start game", {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 1.5),
+    anchor("center"),
+    scale(0.8),
+  ])
+  
+  onKeyPress("enter", () => {
+    go("game");
+  });
+});
 
 scene("game over", () => {
   const backgroundImage = add([
@@ -289,16 +352,31 @@ scene("game over", () => {
 
   const enter = add([
     text("Press Enter to start game", {
-      font: "speed", 
-      size: 68, 
-      color: rgb(0, 1, 0.6), 
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
     }),
-    pos(width() / 2, height() / 1.5), 
+    pos(width() / 2, height() / 1.5),
+    anchor("center"),
+    scale(0.8),
+  ])
+  
+  const viewLeaderboard = add([
+    text("Press Space to View Leaderboard!", {
+      font: "speed",
+      size: 68,
+      color: rgb(0, 1, 0.6),
+    }),
+    pos(width() / 2, height() / 1.25),
     anchor("center"),
     scale(0.8),
   ])
 
   onKeyPress("enter", () => {
     go("game");
+  });
+  
+  onKeyPress("space", () => {
+    go("leaderboard");
   });
 });
