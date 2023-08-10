@@ -57,8 +57,6 @@ scene("start", () => {
     scale(0.8),
   ])
 
-  const gameSound = play("gameSound", { loop: true, volume: 0.5 })
-
   onKeyPress("enter", () => {
     go("instructions");
   });
@@ -145,6 +143,8 @@ scene("instructions", () => {
   onKeyDown("down", () => {
     player.move(0, 300)
   })
+  
+  const gameSound = play("gameSound", { loop: true, volume: 0.5 })
 });
 
 go("start");
