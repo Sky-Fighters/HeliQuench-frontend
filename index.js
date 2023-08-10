@@ -283,10 +283,10 @@ scene("game over", () => {
   ]);
   
   
-//   topScore = 
+  
 
-// const displayTopScore = add([
-//   text(`topScore: ${topScore.value}`)])
+const displayTopScore = add([
+  text(`topScore: ${userHighScores.value}`)])
   
   const displayScore = add([
     text(`Score: ${score.value}`, {
