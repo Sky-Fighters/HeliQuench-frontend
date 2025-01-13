@@ -123,7 +123,7 @@ scene("instructions", () => {
   onKeyDown("d", () => {
     player.move(300, 0)
   })
-  
+
   onKeyDown("right", () => {
     player.move(300, 0)
   })
@@ -131,7 +131,7 @@ scene("instructions", () => {
   onKeyDown("w", () => {
     player.move(0, -300)
   })
-  
+
   onKeyDown("up", () => {
     player.move(0, -300)
   })
@@ -143,7 +143,7 @@ scene("instructions", () => {
   onKeyDown("down", () => {
     player.move(0, 300)
   })
-  
+
   const gameSound = play("gameSound", { loop: true, volume: 0.5 })
 });
 
@@ -171,7 +171,7 @@ scene("game", () => {
     area(),
   ]);
 
-   onKeyDown("a", () => {
+  onKeyDown("a", () => {
     // .move() is provided by pos() component, move by pixels per second
     player.move(-300, 0)
   })
@@ -183,7 +183,7 @@ scene("game", () => {
   onKeyDown("d", () => {
     player.move(300, 0)
   })
-  
+
   onKeyDown("right", () => {
     player.move(300, 0)
   })
@@ -191,7 +191,7 @@ scene("game", () => {
   onKeyDown("w", () => {
     player.move(0, -300)
   })
-  
+
   onKeyDown("up", () => {
     player.move(0, -300)
   })
